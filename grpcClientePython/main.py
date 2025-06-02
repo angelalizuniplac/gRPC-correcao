@@ -36,8 +36,6 @@ def client():
 
         # === EXIBIÇÃO DOS RESULTADOS ===
         
-        # Imprime as respostas de todas as operações
-        # Cada resposta contém: mensagem de status, id, nome e email do usuário
         print(f"{response1.msg}: {response1.id} -  {response1.name} -  {response1.email}")
         print(f"{response2.msg}: {response2.id} -  {response2.name} -  {response2.email}")
         print(f"{response3.msg}: {response3.id} -  {response3.name} -  {response3.email}")
