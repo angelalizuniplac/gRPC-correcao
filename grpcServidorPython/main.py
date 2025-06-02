@@ -18,7 +18,9 @@ def server():
     # Define a porta onde o servidor vai escutar (50051 é a porta padrão para serviços gRPC)
     # [::] significa que vai escutar em todos os endereços IPv6 (equivalente a 0.0.0.0 para IPv4)
     server.add_insecure_port('[::]:50051')
-    
+    #insecure_channel conexão insegura = sem criptografia/autenticação por exemplo
+    #segura seria = secure_channel
+
     # Exibe uma mensagem informando que o servidor foi iniciado
     print("Server started at 50051")
     

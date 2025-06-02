@@ -1,4 +1,4 @@
-# Serviços gRPC - stubs e services para comunicação remota)
+# Serviços gRPC - stubs e services para comunicação remota
 import Proto.user_pb2_grpc as pb2_grpc
 # Mensagens Protobuf (estruturas de dados).
 import Proto.user_pb2 as pb2
