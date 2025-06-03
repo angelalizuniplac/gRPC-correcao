@@ -1,14 +1,12 @@
+// Especifica a versão da sintaxe Protocol Buffers a ser utilizada
 syntax = "proto3";
 
+// Define o namespace/pacote agrupa todas as definições relacionadas a usuários
 package User;
 
-service UserService {
-    rpc AddUser(UserRequest) returns (UserResponse);
-    rpc GetUser(UserIdRequest) returns (UserResponse);
-    rpc UpdateUser(UserRequest) returns (UserResponse);
-    rpc DeleteUser(UserIdRequest) returns (UserResponse);
-}
+//Contrato:
 
+//Estrutura de Dados
 message UserRequest {
     int32 id = 1;
     string name = 2;
@@ -24,4 +22,12 @@ message UserResponse {
     string name = 2;
     string email = 3;
     string msg = 4;
+}
+
+#Interface
+service UserService {
+    rpc AddUser(UserRequest) returns (UserResponse);
+    rpc GetUser(UserIdRequest) returns (UserResponse);
+    rpc UpdateUser(UserRequest) returns (UserResponse);
+    rpc DeleteUser(UserIdRequest) returns (UserResponse);
 }
