@@ -48,7 +48,8 @@ Agora está pronto para executar:
 
 ---
 
-A execução deve acontecer dentro de cada diretorio, cliente e servidor, ou seja, executar 2x sendo 1 para cada. 
+A execução deve acontecer dentro de cada diretorio, cliente e servidor, ou seja, executar 2x sendo 1 para cada.
+Frisando: Cliente e servidor devem terem seus proprios ambientes virtuais!!!!
 
 Lembrando também que esse passo a passo é a configuração completa para a primeira execução, após isso para as proximas basta apenas ativar o ambiente virtual e executar o arquivo main. 
 
