@@ -24,7 +24,7 @@ message UserResponse {
     string msg = 4;
 }
 
-#Interface
+//Interface
 service UserService {
     rpc AddUser(UserRequest) returns (UserResponse);
     rpc GetUser(UserIdRequest) returns (UserResponse);
