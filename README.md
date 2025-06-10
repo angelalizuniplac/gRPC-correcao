@@ -31,7 +31,7 @@ As ferramentas gRPC incluem o compilador protoc e o plugin especial para gerar c
 
 4. Atualize o arquivo de requeriments
 
-    ```pip freeze > requirements.txts ```
+    ```pip freeze > requirements.txt ```
 
 Ambiente criado e configurado! 
 

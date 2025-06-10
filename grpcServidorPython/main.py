@@ -2,7 +2,8 @@ import grpc  # Importa a biblioteca gRPC para criar serviços RPC
 from concurrent import futures  # Importa futures para gerenciar execução concorrente
 import Proto.user_pb2_grpc as pb2_grpc  # Importa as classes geradas pelo compilador do protobuf para gRPC
 import Services.UserService as service  # Importa o serviço de usuário que implementa a lógica de negócio
-
+import Proto.product_pb2_grpc as pb2_grpc_product # Importa as classes geradas pelo compilador do protobuf para gRPC
+import Services.ProductService as serviceProduct # Importa o serviço de produto que implementa a lógica de negócio
 
 def server():
     # Cria uma instância do servidor gRPC com um pool de 10 threads para processar requisições
@@ -14,13 +15,14 @@ def server():
     
     # Registra nosso serviço de usuário no servidor gRPC
     pb2_grpc.add_UserServiceServicer_to_server(service.UserService(), server)
+
+    # registra o servidor de produto
+    pb2_grpc_product.add_ProductServiceServicer_to_server(serviceProduct.ProductService(), server)
     
     # Define a porta onde o servidor vai escutar (50051 é a porta padrão para serviços gRPC)
     # [::] significa que vai escutar em todos os endereços IPv6 (equivalente a 0.0.0.0 para IPv4)
     server.add_insecure_port('[::]:50051')
-    #insecure_channel conexão insegura = sem criptografia/autenticação por exemplo
-    #segura seria = secure_channel
-
+    
     # Exibe uma mensagem informando que o servidor foi iniciado
     print("Server started at 50051")
     

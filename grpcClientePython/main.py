@@ -1,48 +1,50 @@
-# Serviços gRPC - stubs e services para comunicação remota
-import grpc  # Importa a biblioteca gRPC para criar serviços RPC
-import Proto.user_pb2_grpc as pb2_grpc  # Stub 
-import Proto.user_pb2 as pb2  # Classes de mensagens Protocol Buffers geradas automaticamente
+import grpc
+import Proto.user_pb2_grpc as pb2_grpc
+import Proto.user_pb2 as pb2
+import Proto.product_pb2 as pb2_product
+import Proto.product_pb2_grpc as pb2_grpc_product
 
 
 def client():
-    # Estabelece uma conexão insegura (sem TLS/SSL) com o servidor gRPC
-    # O servidor está rodando no localhost na porta 50051
-    with grpc.insecure_channel('localhost:50051') as channel:
-        # Cria um stub (cliente) para o serviço UserService
-        # O stub é usado para fazer chamadas RPC para o servidor
-        stub = pb2_grpc.UserServiceStub(channel)
-        
-        # === OPERAÇÕES CRUD NO SERVIÇO DE USUÁRIOS ===
-        
-        # 1. Adiciona um novo usuário (John)
-        # id é auto-incrementado pelo servidor)
-        response1 = stub.AddUser(pb2.UserRequest(id=0, name='John', email="ze@123"))
-        
-        # 2. Adiciona outro usuário (ze)
-        response2 = stub.AddUser(pb2.UserRequest(id=0, name='ze', email="ze@123"))
+   with grpc.insecure_channel('localhost:50051') as channel:
+      #operações de cliente
+      stubUser = pb2_grpc.UserServiceStub(channel)
 
-        # 3. Busca um usuário por id
-        response3 = stub.GetUser(pb2.UserIdRequest(id=9))
+      #adicionado campo de idade no crud de usuario
 
-        # 4. Atualiza o usuário com ID 2
-        # Modifica nome para 'angela' e email para 'angela@123'
-        response4 = stub.UpdateUser(pb2.UserRequest(id=2, name='angela', email="angela@123"))
+      print('Dados de usuário')
+      responseUser1 = stubUser.AddUser(pb2.UserRequest(id = 0, name='John', email = "ze@123", age = 30))
+      responseUser2 = stubUser.AddUser(pb2.UserRequest(id = 0, name='ze', email = "ze@123", age = 31))
 
-        # 5. Busca o usuário recém-atualizado (ID 2) para verificar as mudanças
-        response5 = stub.GetUser(pb2.UserIdRequest(id=2))
+      responseUser3 = stubUser.GetUser(pb2.UserIdRequest(id = 9))
 
-        # 6. Remove o usuário com ID 1 do sistema
-        response6 = stub.DeleteUser(pb2.UserIdRequest(id=1))
+      responseUser4 = stubUser.UpdateUser(pb2.UserRequest(id = 2, name='angela', email = "angela@123", age = 27))
 
-        # === EXIBIÇÃO DOS RESULTADOS ===
-        
-        print(f"{response1.msg}: {response1.id} -  {response1.name} -  {response1.email}")
-        print(f"{response2.msg}: {response2.id} -  {response2.name} -  {response2.email}")
-        print(f"{response3.msg}: {response3.id} -  {response3.name} -  {response3.email}")
-        print(f"{response4.msg}: {response4.id} -  {response4.name} -  {response4.email}")
-        print(f"{response5.msg}: {response5.id} -  {response5.name} -  {response5.email}")
-        print(f"{response6.msg}: {response6.id} -  {response6.name} -  {response6.email}")   
+      responseUser5 = stubUser.GetUser(pb2.UserIdRequest(id = 2))
 
+      responseUser6 = stubUser.DeleteUser(pb2.UserIdRequest(id = 1))
+
+      print(f"{responseUser1.msg}: {responseUser1.id} -  {responseUser1.name} -  {responseUser1.email} - {responseUser1.age}")
+      print(f"{responseUser2.msg}: {responseUser2.id} -  {responseUser2.name} -  {responseUser2.email} - {responseUser2.age}")
+      print(f"{responseUser3.msg}: {responseUser3.id} -  {responseUser3.name} -  {responseUser3.email} - {responseUser3.age}")
+      print(f"{responseUser4.msg}: {responseUser4.id} -  {responseUser4.name} -  {responseUser4.email} - {responseUser4.age}")
+      print(f"{responseUser5.msg}: {responseUser5.id} -  {responseUser5.name} -  {responseUser5.email} - {responseUser5.age}")
+      print(f"{responseUser6.msg}: {responseUser6.id} -  {responseUser6.name} -  {responseUser6.email} - {responseUser6.age}")  
+      
+      #adicionado operações de produto
+      print('Dados de produto')
+      stub_product = pb2_grpc_product.ProductServiceStub(channel)
+      
+      response1 = stub_product.AddProduct(pb2_product.ProductRequest(id=1, description="Abc Bolinhas", value=20.24))       
+      response2 = stub_product.UpdateProduct(pb2_product.ProductRequest(id=1, description='Abc Bolinhas - seu nome', value=30.90))
+      response3 = stub_product.GetProduct(pb2_product.ProductIdRequest(id=1))
+      response4 = stub_product.DeleteProduct(pb2_product.ProductIdRequest(id=5))
+
+      print(f"{response1.msg}: {response1.id} -  {response1.description} -  {response1.value}")
+      print(f"{response2.msg}: {response2.id} -  {response2.description} -  {response2.value}")
+      print(f"{response3.msg}: {response3.id} -  {response3.description} -  {response3.value}")
+      print(f"{response4.msg}: {response4.id} -  {response4.description} -  {response4.value}")
+    
 
 if __name__ == '__main__':
     client()

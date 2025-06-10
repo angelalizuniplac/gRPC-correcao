@@ -1,4 +1,4 @@
-# Serviços gRPC - stubs e services para comunicação remota
+# Serviços gRPC - stubs e services para comunicação remota)
 import Proto.user_pb2_grpc as pb2_grpc
 # Mensagens Protobuf (estruturas de dados).
 import Proto.user_pb2 as pb2
@@ -12,14 +12,17 @@ class UserService(pb2_grpc.UserService):
     def AddUser(self, request, context):
         # print(context.is_active()) #context.abort() Exemplo de uso para o context
 
+        #ADICIONADO OS CAMPOS DE IDADE
+
         #adiciona os itens no array de usuarios
         id = len(usuarios) + 1
         usuarios.append({
             'id': id,
             'name': request.name,
-            'email': request.email
+            'email': request.email,
+            'age': request.age
         })
-        return pb2.UserResponse(**{'id': id, 'name' : request.name, 'email': request.email, 'msg': 'add ok'})
+        return pb2.UserResponse(**{'id': id, 'name' : request.name, 'email': request.email, 'age': request.age, 'msg': 'add ok'})
 
     def GetUser(self, request, context):
         # busca na lista
@@ -27,9 +30,9 @@ class UserService(pb2_grpc.UserService):
         #Se nenhum item for encontrado, ele retorna o valor padrão: None=nenhum
         user = next((usuario for usuario in usuarios if usuario['id'] == int(request.id)), None)
         if user:
-            return pb2.UserResponse(**{'id': user['id'], 'name' : user['name'], 'email': user['email'], 'msg': 'get ok'})
+            return pb2.UserResponse(**{'id': user['id'], 'name' : user['name'], 'email': user['email'], 'age': user['age'], 'msg': 'get ok'})
         else:
-            return pb2.UserResponse(**{'id': 0, 'name' : '', 'email': '', 'msg': 'get erro'})
+            return pb2.UserResponse(**{'id': 0, 'name' : '', 'email': '', 'age': 0, 'msg': 'get erro'})
 
     def UpdateUser(self, request, context):
         # busca na lista
@@ -38,9 +41,10 @@ class UserService(pb2_grpc.UserService):
             # atualiza os dados
             user['name'] = request.name
             user['email'] = request.email
-            return pb2.UserResponse(**{'id': user['id'], 'name' : user['name'], 'email': user['email'], 'msg': 'update ok'})
+            user['age'] = request.age
+            return pb2.UserResponse(**{'id': user['id'], 'name' : user['name'], 'email': user['email'], 'age': user['age'], 'msg': 'update ok'})
         else:
-            return pb2.UserResponse(**{'id': 0, 'name' : '', 'email': '', 'msg': 'update erro'})
+            return pb2.UserResponse(**{'id': 0, 'name' : '', 'email': '', 'age': 0, 'msg': 'update erro'})
 
     def DeleteUser(self, request, context):
         # busca na lista
@@ -48,6 +52,6 @@ class UserService(pb2_grpc.UserService):
         if user:
             # exclui o usuário
             usuarios.remove(user)
-            return pb2.UserResponse(**{'id': user['id'], 'name' : user['name'], 'email': user['email'], 'msg': 'del ok'})
+            return pb2.UserResponse(**{'id': user['id'], 'name' : user['name'], 'email': user['email'], 'age': user['age'], 'msg': 'del ok'})
         else:
-            return pb2.UserResponse(**{'id': 0, 'name' : '', 'email': '', 'msg': 'del erro'})
+            return pb2.UserResponse(**{'id': 0, 'name' : '', 'email': '', 'age': 0, 'msg': 'del erro'})
